@@ -9,9 +9,11 @@ public class ServerMaster
 {
   private ServerSocket serverSocket;
   private LinkedList<ServerWorker> allConnections = new LinkedList<ServerWorker>();
+  private ThneedStore store;
 
   public ServerMaster(int portNumber)
   {
+    store = new ThneedStore();
     try
     {
       serverSocket = new ServerSocket(portNumber);
