@@ -15,7 +15,7 @@ public class Client
   private Scanner keyboard;
   private ClientListener listener;
 
-  private volatile int sneedsInStore;
+  private volatile int thneedsInStore;
 
   public Client(String host, int portNumber)
   {
@@ -54,8 +54,7 @@ public class Client
     }
     catch (IOException e)
     {
-      System.err.println("Client Error: Could not open connection to " + host
-              + " on port " + portNumber);
+      System.err.println("Client Error: Could not open connection to " + host + " on port " + portNumber);
       e.printStackTrace();
       return false;
     }
@@ -72,8 +71,7 @@ public class Client
     }
     try
     {
-      reader = new BufferedReader(new InputStreamReader(
-              clientSocket.getInputStream()));
+      reader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
     }
     catch (IOException e)
     {
@@ -89,7 +87,7 @@ public class Client
   {
     while (true)
     {
-      System.out.println("Sneeds in Inventory = " + sneedsInStore);
+      System.out.println("Thneeds in Inventory = " + thneedsInStore);
       System.out.println("Enter Command (Buy: # | Sell: #):");
       String cmd = keyboard.nextLine();
       if (cmd == null) continue;
@@ -153,8 +151,6 @@ public class Client
   }
 
 
-
-
   class ClientListener extends Thread
   {
     public void run()
@@ -173,13 +169,12 @@ public class Client
       {
         System.out.println("Client: listening to socket");
         String msg = reader.readLine();
-        if (msg.startsWith("Sneeds:"))
+        if (msg.startsWith("Thneeds:"))
         {
           int idxOfNum = msg.indexOf(':') + 1;
           int n = Integer.parseInt(msg.substring(idxOfNum));
-          sneedsInStore = n;
-          System.out.println("Current Inventory of Sneeds (" + timeDiff()
-                  + ") = " + sneedsInStore);
+          thneedsInStore = n;
+          System.out.println("Current Inventory of Thneeds (" + timeDiff() + ") = " + thneedsInStore);
         }
         else if (msg.startsWith("You just bought "))
         {
@@ -191,8 +186,7 @@ public class Client
         }
         else
         {
-          System.out.println("Unrecognized message from Server(" + timeDiff()
-                  + ") = " + msg);
+          System.out.println("Unrecognized message from Server(" + timeDiff() + ") = " + msg);
         }
 
       }
@@ -203,5 +197,4 @@ public class Client
     }
 
   }
-
 }
