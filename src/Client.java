@@ -41,7 +41,6 @@ public class Client
 
   private boolean openConnection(String host, int portNumber)
   {
-
     try
     {
       clientSocket = new Socket(host, portNumber);

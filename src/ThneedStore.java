@@ -5,7 +5,6 @@ public class ThneedStore
 {
   private static int inventory = 0;
   private static int $balance$ = 1000;
-  private static int clients = 0;
 
   public ThneedStore()
   {

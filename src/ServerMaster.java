@@ -8,7 +8,7 @@ import java.util.LinkedList;
 public class ServerMaster
 {
   private ServerSocket serverSocket;
-  private LinkedList<ServerWorker> allConnections = new LinkedList<ServerWorker>();
+  private LinkedList<ServerWorker> allConnections = new LinkedList<>();
   private ThneedStore store;
 
   public ServerMaster(int portNumber)
