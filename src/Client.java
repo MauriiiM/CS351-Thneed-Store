@@ -2,12 +2,18 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.Scanner;
 
 public class Client
 {
+  /**
+   * @todo make false for turn in
+   */
+  private static final boolean DEBUG = true;
+
   private Socket clientSocket;
   private PrintWriter write;
   private BufferedReader reader;
@@ -35,7 +41,6 @@ public class Client
     listenToUserRequests();
 
     closeAll();
-
   }
 
   private boolean openConnection(String host, int portNumber)
@@ -127,6 +132,9 @@ public class Client
 
   }
 
+  /**
+   * @param args [server name] [server port]
+   */
   public static void main(String[] args)
   {
 
@@ -135,8 +143,16 @@ public class Client
 
     try
     {
-      host = args[0];
-      port = Integer.parseInt(args[1]);
+      if (DEBUG)
+      {
+        host = InetAddress.getLocalHost().getHostName();
+        port = 5555;
+      }
+      else
+      {
+        host = args[0];
+        port = Integer.parseInt(args[1]);
+      }
       if (port < 1) throw new Exception();
     }
     catch (Exception e)

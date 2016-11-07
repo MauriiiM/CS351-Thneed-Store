@@ -73,10 +73,6 @@ public class ServerMaster
     }
   }
 
-  /**
-   * @todo
-   * @param args [server name] [suver port]
-   */
   public static void main(String args[])
   {
     //Valid port numbers are 1024 through 65535.
