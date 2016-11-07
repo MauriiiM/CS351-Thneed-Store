@@ -38,7 +38,6 @@ public class Client
 
   }
 
-
   private boolean openConnection(String host, int portNumber)
   {
     try
