@@ -21,6 +21,9 @@ public class Client
   private Scanner keyboard;
   private ClientListener listener;
 
+  private int buyN;
+  private int sellN;
+
   private volatile int thneedsInStore;
 
   public Client(String host, int portNumber)
@@ -83,7 +86,6 @@ public class Client
       return false;
     }
     return true;
-
   }
 
   private void listenToUserRequests()
@@ -92,14 +94,22 @@ public class Client
     {
       System.out.println("Thneeds in Inventory = " + thneedsInStore);
       System.out.println("Enter Command (Buy: # | Sell: #):");
-      String cmd = keyboard.nextLine();
-      if (cmd == null) continue;
-      if (cmd.length() < 1) continue;
+      String typedInput = keyboard.nextLine();
+      if (typedInput == null) continue;
+      if (typedInput.length() < 1) continue;
 
-      char c = cmd.charAt(0);
-      if (c == 'q') break;
+      char c = typedInput.charAt(0);
+      if (c == 'q')
+      {
+        break;
+      }
+      else
+      {
+        buyN = keyboard.nextInt();
+        System.out.println(buyN);
+      }
 
-      write.println(cmd);
+      write.println(typedInput);
     }
   }
 
@@ -164,7 +174,6 @@ public class Client
 
   }
 
-
   class ClientListener extends Thread
   {
     public void run()
@@ -209,6 +218,5 @@ public class Client
         e.printStackTrace();
       }
     }
-
   }
 }
