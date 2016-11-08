@@ -56,7 +56,6 @@ public class ServerMaster
         System.err.println("Server error: Failed to connect to client.");
         e.printStackTrace();
       }
-
     }
   }
 
@@ -71,6 +70,11 @@ public class ServerMaster
     {
 
     }
+  }
+
+  public void removeServerWorker(ServerWorker serverWorker)
+  {
+    allConnections.remove(allConnections.indexOf(serverWorker));
   }
 
   public static void main(String args[])

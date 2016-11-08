@@ -21,8 +21,8 @@ public class Client
   private Scanner keyboard;
   private ClientListener listener;
 
-  private int buyN;
-  private int sellN;
+  private int quantity;
+  private float unitPrice;
 
   private volatile int thneedsInStore;
 
@@ -103,10 +103,18 @@ public class Client
       {
         break;
       }
-      else
+      else if (c == 'b')
       {
-        buyN = keyboard.nextInt();
-        System.out.println(buyN);
+        quantity = keyboard.nextInt();
+        System.out.println(quantity);
+      }
+      else if (c == 's')
+      {
+
+      }
+      else if (c == 'i')
+      {
+
       }
 
       write.println(typedInput);
@@ -137,7 +145,7 @@ public class Client
   private String timeDiff()
   {
     long namoSecDiff = System.nanoTime() - startNanoSec;
-    double secDiff = (double) namoSecDiff / 1000000000.0;
+    double secDiff = (double) namoSecDiff / 1_000_000_000.0;
     return String.format("%.6f", secDiff);
 
   }
