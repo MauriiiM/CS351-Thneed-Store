@@ -3,18 +3,19 @@
  */
 public class ThneedStore
 {
+  private ServerMaster serverMaster;
   private static ThneedStore store;
   private static int inventory = 0;
   private static int $balance$ = 1000;
 
-  public ThneedStore()
+  public ThneedStore(ServerMaster serverMaster)
   {
-
+   this.serverMaster = serverMaster;
   }
 
-  public static ThneedStore getStore()
+  public static ThneedStore getStore(ServerMaster serverMaster)
   {
-    if(store == null) store = new ThneedStore();
+    if(store == null) store = new ThneedStore(serverMaster);
     return store;
   }
 

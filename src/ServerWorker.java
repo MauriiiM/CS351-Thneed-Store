@@ -45,9 +45,17 @@ public class ServerWorker extends Thread
 
   public void run()
   {
-    while(true)
+    String typedInput;
+    while (true)
     {
-      System.out.println("HHHHHH");
+      try
+      {
+        typedInput = clientReader.readLine();
+      }
+      catch (IOException e)
+      {
+        System.err.println(e);
+      }
     }
   }
 

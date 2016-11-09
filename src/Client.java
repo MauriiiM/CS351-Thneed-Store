@@ -48,6 +48,11 @@ public class Client
     closeAll();
   }
 
+  public boolean isRunning()
+  {
+    return running;
+  }
+
   private boolean openConnection(String host, int portNumber)
   {
     try
@@ -92,40 +97,41 @@ public class Client
 
   private void listenToUserRequests()
   {
+    String[] val;
     while (true)
     {
       String typedInput = keyboard.nextLine();
       if (typedInput == null) continue;
       if (typedInput.length() < 1) continue;
+      val = typedInput.split(" ");
+      quantity = Integer.parseInt(val[1]);
+      unitPrice = Float.parseFloat(val[2]);
 
       char c = typedInput.charAt(0);
-      if (c == 'b')
+      switch (c)
       {
-        quantity = keyboard.nextInt();
-        System.out.println(quantity);
+        case 'b':
 
-        if(quantity*unitPrice <= $balance$inStore)
-        {
+          System.out.println(quantity);
 
-        }
+          if (quantity * unitPrice <= $balance$inStore)
+          {
+            write.println("b" + quantity * unitPrice);
+          }
+          break;
+        case 's':
+          if (quantity <= thneedsInStore)
+          {
+            write.println("s" + quantity);
+          }
+          break;
+        case 'i':
+          System.out.printf("There are %d thneeds in the store \n", thneedsInStore);
+          break;
+        case 'q':
+          running = false;
+          break;
       }
-      else if (c == 's')
-      {
-        if(quantity <= thneedsInStore)
-        {
-
-        }
-      }
-      else if (c == 'i')
-      {
-        System.out.printf("There are %d thneeds in the store \n", thneedsInStore);
-      }
-      else if (c == 'q')
-      {
-        running = false;
-        break;
-      }
-
       write.println(typedInput);
     }
   }

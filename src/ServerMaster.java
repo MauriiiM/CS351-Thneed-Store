@@ -13,7 +13,7 @@ public class ServerMaster
 
   public ServerMaster(int portNumber)
   {
-    store = ThneedStore.getStore();
+    store = ThneedStore.getStore(this);
     try
     {
       serverSocket = new ServerSocket(portNumber);
