@@ -50,11 +50,6 @@ public class Client
     closeAll();
   }
 
-  public boolean isRunning()
-  {
-    return running;
-  }
-
   private boolean openConnection(String host, int portNumber)
   {
     try
@@ -119,7 +114,7 @@ public class Client
           System.out.println($balance$inStore);
           if (quantity * unitPrice <= $balance$inStore)
           {
-            write.println("b" + quantity * unitPrice);
+            write.println("b " + quantity + " " + unitPrice + " " + timeDiff());
           }
           break;
         case 's':
@@ -128,7 +123,7 @@ public class Client
 
           if (quantity <= thneedsInStore)
           {
-            write.println("s" + quantity);
+            write.println("s " + quantity + " " + unitPrice+ " " + timeDiff());
           }
           break;
         case 'i':

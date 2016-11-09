@@ -34,23 +34,23 @@ public class ThneedStore
     return $balance$;
   }
 
-  synchronized void buyThneeds(int bought, float unitCost)
+  synchronized void buyThneeds(int bought, float unitCost, String time)
   {
     if (bought * unitCost <= $balance$)
     {
       inventory += bought;
       $balance$ -= unitCost * bought;
-      serverMaster.broadcast("change");
+      serverMaster.broadcast(time + ": inventory=" + inventory + " : treasury=" + $balance$);
     }
   }
 
-  synchronized void sellThneeds(int sold, float unitCost)
+  synchronized void sellThneeds(int sold, float unitCost, String time)
   {
     if (sold <= inventory)
     {
       inventory -= sold;
       $balance$ += unitCost * sold;
-      serverMaster.broadcast("change");
+      serverMaster.broadcast(time + ": inventory=" + inventory + " : treasury=" + $balance$);
     }
   }
 }

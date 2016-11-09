@@ -51,8 +51,16 @@ public class ServerWorker extends Thread
       try
       {
         typedInput = clientReader.readLine();
-        if (typedInput.contains("b"));
-        else if(typedInput.contains("s"));
+        String[] val = typedInput.split(" ");
+        if (val[0].equals("b"))
+        {
+          ThneedStore.getStore().buyThneeds(Integer.parseInt(val[1]), Float.parseFloat(val[2]), val[3]);
+        }
+        else if (val[0].equals("s"))
+        {
+          ThneedStore.getStore().sellThneeds(Integer.parseInt(val[1]), Float.parseFloat(val[2]), val[3]);
+
+        }
       }
       catch (IOException e)
       {

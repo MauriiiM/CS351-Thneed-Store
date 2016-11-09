@@ -68,7 +68,7 @@ public class ServerMaster
   {
     for (ServerWorker workers : allConnections)
     {
-
+      workers.send(s);
     }
   }
 
