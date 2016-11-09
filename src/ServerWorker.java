@@ -51,6 +51,8 @@ public class ServerWorker extends Thread
       try
       {
         typedInput = clientReader.readLine();
+        if (typedInput.contains("b"));
+        else if(typedInput.contains("s"));
       }
       catch (IOException e)
       {

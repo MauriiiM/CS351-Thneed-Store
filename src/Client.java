@@ -24,12 +24,14 @@ public class Client
   private int quantity;
   private float unitPrice;
 
-  private int $balance$inStore;
+  private float $balance$inStore;
   private volatile int thneedsInStore;
-  private volatile boolean running;
+  private volatile boolean running = true;
 
   public Client(String host, int portNumber)
   {
+    $balance$inStore = ThneedStore.getStore().getBalance();
+    thneedsInStore = ThneedStore.getStore().getInventory();
     startNanoSec = System.nanoTime();
     System.out.println("Starting Client: " + timeDiff());
 
@@ -98,28 +100,32 @@ public class Client
   private void listenToUserRequests()
   {
     String[] val;
+    while_label:
     while (true)
     {
       String typedInput = keyboard.nextLine();
       if (typedInput == null) continue;
       if (typedInput.length() < 1) continue;
       val = typedInput.split(" ");
-      quantity = Integer.parseInt(val[1]);
-      unitPrice = Float.parseFloat(val[2]);
 
       char c = typedInput.charAt(0);
       switch (c)
       {
         case 'b':
+          quantity = Integer.parseInt(val[1]);
+          unitPrice = Float.parseFloat(val[2]);
 
           System.out.println(quantity);
-
+          System.out.println($balance$inStore);
           if (quantity * unitPrice <= $balance$inStore)
           {
             write.println("b" + quantity * unitPrice);
           }
           break;
         case 's':
+          quantity = Integer.parseInt(val[1]);
+          unitPrice = Float.parseFloat(val[2]);
+
           if (quantity <= thneedsInStore)
           {
             write.println("s" + quantity);
@@ -130,7 +136,7 @@ public class Client
           break;
         case 'q':
           running = false;
-          break;
+          break while_label;
       }
       write.println(typedInput);
     }
@@ -206,7 +212,7 @@ public class Client
       {
         read();
       }
-
+      if (DEBUG) System.out.println("client exited");
     }
 
     private void read()
