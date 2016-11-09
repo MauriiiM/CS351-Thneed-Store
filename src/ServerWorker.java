@@ -24,10 +24,10 @@ public class ServerWorker extends Thread
       System.err.println("Server Worker: Could not open output stream");
       e.printStackTrace();
     }
+
     try
     {
       clientReader = new BufferedReader(new InputStreamReader(client.getInputStream()));
-
     }
     catch (IOException e)
     {
@@ -45,7 +45,10 @@ public class ServerWorker extends Thread
 
   public void run()
   {
-
+    while(true)
+    {
+      System.out.println("HHHHHH");
+    }
   }
 
 }

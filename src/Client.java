@@ -24,7 +24,9 @@ public class Client
   private int quantity;
   private float unitPrice;
 
+  private int $balance$inStore;
   private volatile int thneedsInStore;
+  private volatile boolean running;
 
   public Client(String host, int portNumber)
   {
@@ -92,29 +94,36 @@ public class Client
   {
     while (true)
     {
-      System.out.println("Thneeds in Inventory = " + thneedsInStore);
-      System.out.println("Enter Command (Buy: # | Sell: #):");
       String typedInput = keyboard.nextLine();
       if (typedInput == null) continue;
       if (typedInput.length() < 1) continue;
 
       char c = typedInput.charAt(0);
-      if (c == 'q')
-      {
-        break;
-      }
-      else if (c == 'b')
+      if (c == 'b')
       {
         quantity = keyboard.nextInt();
         System.out.println(quantity);
+
+        if(quantity*unitPrice <= $balance$inStore)
+        {
+
+        }
       }
       else if (c == 's')
       {
+        if(quantity <= thneedsInStore)
+        {
 
+        }
       }
       else if (c == 'i')
       {
-
+        System.out.printf("There are %d thneeds in the store \n", thneedsInStore);
+      }
+      else if (c == 'q')
+      {
+        running = false;
+        break;
       }
 
       write.println(typedInput);
@@ -187,7 +196,7 @@ public class Client
     public void run()
     {
       System.out.println("ClientListener.run()");
-      while (true)
+      while (running)
       {
         read();
       }
