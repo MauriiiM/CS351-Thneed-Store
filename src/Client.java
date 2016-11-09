@@ -110,8 +110,6 @@ public class Client
           quantity = Integer.parseInt(val[1]);
           unitPrice = Float.parseFloat(val[2]);
 
-          System.out.println(quantity);
-          System.out.println($balance$inStore);
           if (quantity * unitPrice <= $balance$inStore)
           {
             write.println("b " + quantity + " " + unitPrice + " " + timeDiff());
@@ -162,7 +160,7 @@ public class Client
   {
     long namoSecDiff = System.nanoTime() - startNanoSec;
     double secDiff = (double) namoSecDiff / 1_000_000_000.0;
-    return String.format("%.6f", secDiff);
+    return String.format("%.3f", secDiff);
 
   }
 

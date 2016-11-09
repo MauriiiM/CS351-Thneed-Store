@@ -59,7 +59,6 @@ public class ServerWorker extends Thread
         else if (val[0].equals("s"))
         {
           ThneedStore.getStore().sellThneeds(Integer.parseInt(val[1]), Float.parseFloat(val[2]), val[3]);
-
         }
       }
       catch (IOException e)
