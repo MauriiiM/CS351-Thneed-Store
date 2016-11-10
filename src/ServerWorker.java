@@ -53,30 +53,32 @@ public class ServerWorker extends Thread
     String val[];
     while (true)
     {
-      try
+      synchronized (this)
       {
-        typedInput = clientReader.readLine();
-        System.out.println("typedInput = " + typedInput);
-        if (typedInput.charAt(0) == 'b')
+        try
         {
-          val = typedInput.split(" ");
-          serverMaster.getStore().buyThneeds(Integer.parseInt(val[1]), Float.parseFloat(val[2]), val[3]);
+          typedInput = clientReader.readLine();
+          System.out.println("typedInput = " + typedInput);
+          if (typedInput.charAt(0) == 'b')
+          {
+            val = typedInput.split(" ");
+            serverMaster.getStore().buyThneeds(Integer.parseInt(val[1]), Float.parseFloat(val[2]), val[3]);
+          }
+          else if (typedInput.charAt(0) == 's')
+          {
+            val = typedInput.split(" ");
+            serverMaster.getStore().sellThneeds(Integer.parseInt(val[1]), Float.parseFloat(val[2]), val[3]);
+          }
+          else if (typedInput.equals("q"))
+          {
+            serverMaster.removeServerWorker(this);
+          }
         }
-        else if (typedInput.charAt(0) == 's')
+        catch (IOException e)
         {
-          val = typedInput.split(" ");
-          serverMaster.getStore().sellThneeds(Integer.parseInt(val[1]), Float.parseFloat(val[2]), val[3]);
+          System.err.println(e);
         }
-        else if(typedInput.equals("q"))
-        {
-          serverMaster.removeServerWorker(this);
-        }
-      }
-      catch (IOException e)
-      {
-        System.err.println(e);
       }
     }
   }
-
 }

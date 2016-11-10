@@ -6,12 +6,14 @@ public class ThneedStore
 {
   private ServerMaster serverMaster;
   private static ThneedStore store;
-  private int inventory = 0;
-  private int $balance$ = 1000;
+  private int inventory;
+  private int $balance$;
 
   public ThneedStore(ServerMaster serverMaster)
   {
     this.serverMaster = serverMaster;
+    inventory = 0;
+    $balance$ = 1000;
   }
 
   public static ThneedStore getStore(ServerMaster serverMaster)

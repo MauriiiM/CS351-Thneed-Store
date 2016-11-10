@@ -30,8 +30,6 @@ public class Client
 
   public Client(String host, int portNumber)
   {
-//    $balance$inStore = ThneedStore.getStore().getBalance();
-//    thneedsInStore = ThneedStore.getStore().getInventory();
     startNanoSec = System.nanoTime();
     System.out.println("Starting Client: " + timeDiff());
 
@@ -214,26 +212,22 @@ public class Client
       {
         System.out.println("Client: listening to socket");
         String msg = reader.readLine();
-        if (msg.startsWith("Thneeds:"))
+        if (msg.contains(": inventory="))
         {
-          int idxOfNum = msg.indexOf(':') + 1;
-          int n = Integer.parseInt(msg.substring(idxOfNum));
-          thneedsInStore = n;
-          System.out.println("Current Inventory of Thneeds (" + timeDiff() + ") = " + thneedsInStore);
+          thneedsInStore = Integer.parseInt(msg.substring(msg.indexOf('=')+1, msg.lastIndexOf(" ")-2));
+          $balance$inStore = Float.parseFloat(msg.substring(msg.lastIndexOf('=')+1));
+          System.out.println(msg);
         }
-        else if (msg.startsWith("You just bought "))
+        else if(msg.startsWith("$"))
         {
-          System.out.println("Success: " + msg);
-        }
-        else if (msg.startsWith("Error"))
-        {
-          System.out.println("Failed: " + msg);
+          thneedsInStore = Integer.parseInt(msg.substring(1, msg.indexOf(' ')));
+          $balance$inStore = Float.parseFloat(msg.substring(msg.indexOf(' ')+1));
+          System.out.println(thneedsInStore +" "+ $balance$inStore);
         }
         else
         {
           System.out.println("Unrecognized message from Server(" + timeDiff() + ") = " + msg);
         }
-
       }
       catch (IOException e)
       {

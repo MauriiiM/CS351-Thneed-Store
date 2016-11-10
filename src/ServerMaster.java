@@ -60,6 +60,7 @@ public class ServerMaster
         System.out.println("ServerMaster: *********** new Connection");
         allConnections.add(worker);
         worker.send("ServerMaster says hello!");
+        worker.send("$" + store.getInventory() + " " + store.getBalance());
       }
       catch (IOException e)
       {
@@ -87,15 +88,18 @@ public class ServerMaster
     //Valid port numbers are 1024 through 65535.
     //  ports under 1024 are reserved for system services http, ftp, etc.
     int port = 5555; //default
-    if (args.length > 0) try
+    if (args.length > 0)
     {
-      port = Integer.parseInt(args[0]);
-      if (port < 1) throw new Exception();
-    }
-    catch (Exception e)
-    {
-      System.out.println("Usage: ServerMaster portNumber");
-      System.exit(0);
+      try
+      {
+        port = Integer.parseInt(args[0]);
+        if (port < 1) throw new Exception();
+      }
+      catch (Exception e)
+      {
+        System.out.println("Usage: ServerMaster portNumber");
+        System.exit(0);
+      }
     }
 
     new ServerMaster(port);
