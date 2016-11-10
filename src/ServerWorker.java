@@ -1,3 +1,5 @@
+import com.sun.corba.se.spi.activation.Server;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -9,9 +11,11 @@ public class ServerWorker extends Thread
   private Socket client;
   private PrintWriter clientWriter;
   private BufferedReader clientReader;
+  private ServerMaster serverMaster;
 
-  public ServerWorker(Socket client)
+  public ServerWorker(ServerMaster serverMaster, Socket client)
   {
+    this.serverMaster = serverMaster;
     this.client = client;
 
     try
@@ -46,19 +50,26 @@ public class ServerWorker extends Thread
   public void run()
   {
     String typedInput;
+    String val[];
     while (true)
     {
       try
       {
         typedInput = clientReader.readLine();
-        String[] val = typedInput.split(" ");
-        if (val[0].equals("b"))
+        System.out.println("typedInput = " + typedInput);
+        if (typedInput.charAt(0) == 'b')
         {
-          ThneedStore.getStore().buyThneeds(Integer.parseInt(val[1]), Float.parseFloat(val[2]), val[3]);
+          val = typedInput.split(" ");
+          serverMaster.getStore().buyThneeds(Integer.parseInt(val[1]), Float.parseFloat(val[2]), val[3]);
         }
-        else if (val[0].equals("s"))
+        else if (typedInput.charAt(0) == 's')
         {
-          ThneedStore.getStore().sellThneeds(Integer.parseInt(val[1]), Float.parseFloat(val[2]), val[3]);
+          val = typedInput.split(" ");
+          serverMaster.getStore().sellThneeds(Integer.parseInt(val[1]), Float.parseFloat(val[2]), val[3]);
+        }
+        else if(typedInput.equals("q"))
+        {
+          serverMaster.removeServerWorker(this);
         }
       }
       catch (IOException e)

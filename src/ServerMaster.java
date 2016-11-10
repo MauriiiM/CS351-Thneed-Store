@@ -13,7 +13,7 @@ public class ServerMaster
 
   public ServerMaster(int portNumber)
   {
-    store = ThneedStore.getStore(this);
+    store = ThneedStore.getStore(this); //will create the store because it's using Singleton Pattern
     try
     {
       serverSocket = new ServerSocket(portNumber);
@@ -26,6 +26,16 @@ public class ServerMaster
     }
 
     waitForConnection(portNumber);
+  }
+
+  public ThneedStore getStore()
+  {
+    return store;
+  }
+
+  public synchronized void removeWorker(ServerWorker worker)
+  {
+    allConnections.remove(worker);
   }
 
   public void waitForConnection(int port)
@@ -45,7 +55,7 @@ public class ServerMaster
       try
       {
         Socket client = serverSocket.accept();
-        ServerWorker worker = new ServerWorker(client);
+        ServerWorker worker = new ServerWorker(this, client);
         worker.start();
         System.out.println("ServerMaster: *********** new Connection");
         allConnections.add(worker);
@@ -57,11 +67,6 @@ public class ServerMaster
         e.printStackTrace();
       }
     }
-  }
-
-  public void cleanConnectionList()
-  {
-
   }
 
   public void broadcast(String s)

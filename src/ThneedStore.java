@@ -1,12 +1,13 @@
 /**
- * Created by mmonsivais on 11/3/16.
+ * Implements the Singleton Pattern hence wh the getter and the self object are static;
+ *
  */
 public class ThneedStore
 {
-  private static ServerMaster serverMaster;
+  private ServerMaster serverMaster;
   private static ThneedStore store;
-  private static int inventory = 0;
-  private static int $balance$ = 1000;
+  private int inventory = 0;
+  private int $balance$ = 1000;
 
   public ThneedStore(ServerMaster serverMaster)
   {
@@ -24,12 +25,12 @@ public class ThneedStore
     return store;
   }
 
-  synchronized static int getInventory()
+  synchronized int getInventory()
   {
     return inventory;
   }
 
-  synchronized static float getBalance()
+  synchronized float getBalance()
   {
     return $balance$;
   }

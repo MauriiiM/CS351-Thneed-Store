@@ -30,8 +30,8 @@ public class Client
 
   public Client(String host, int portNumber)
   {
-    $balance$inStore = ThneedStore.getStore().getBalance();
-    thneedsInStore = ThneedStore.getStore().getInventory();
+//    $balance$inStore = ThneedStore.getStore().getBalance();
+//    thneedsInStore = ThneedStore.getStore().getInventory();
     startNanoSec = System.nanoTime();
     System.out.println("Starting Client: " + timeDiff());
 
@@ -129,6 +129,7 @@ public class Client
           break;
         case 'q':
           running = false;
+          write.println("q");
           break while_label;
       }
       write.println(typedInput);
@@ -153,7 +154,6 @@ public class Client
         e.printStackTrace();
       }
     }
-
   }
 
   private String timeDiff()
