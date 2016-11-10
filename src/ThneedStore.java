@@ -44,7 +44,6 @@ public class ThneedStore
 
   synchronized void sellThneeds(int sold, float unitCost, String time)
   {
-    System.out.println("FFFFFFFFFFFFFFFfff");
     if (sold <= inventory)
     {
       inventory -= sold;

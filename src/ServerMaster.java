@@ -81,7 +81,7 @@ public class ServerMaster
   public void removeServerWorker(ServerWorker serverWorker)
   {
     allConnections.remove(allConnections.indexOf(serverWorker));
-    System.out.println("removed " + serverWorker);
+//    System.out.println("removed " + serverWorker);
   }
 
   public static void main(String args[])
