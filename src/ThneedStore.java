@@ -22,11 +22,6 @@ public class ThneedStore
     return store;
   }
 
-  public static ThneedStore getStore()
-  {
-    return store;
-  }
-
   synchronized int getInventory()
   {
     return inventory;

@@ -58,20 +58,23 @@ public class ServerWorker extends Thread
         try
         {
           typedInput = clientReader.readLine();
-          System.out.println("typedInput = " + typedInput);
-          if (typedInput.charAt(0) == 'b')
+          if(typedInput != null)
           {
-            val = typedInput.split(" ");
-            serverMaster.getStore().buyThneeds(Integer.parseInt(val[1]), Float.parseFloat(val[2]), val[3]);
-          }
-          else if (typedInput.charAt(0) == 's')
-          {
-            val = typedInput.split(" ");
-            serverMaster.getStore().sellThneeds(Integer.parseInt(val[1]), Float.parseFloat(val[2]), val[3]);
-          }
-          else if (typedInput.equals("q"))
-          {
-            serverMaster.removeServerWorker(this);
+            if (typedInput.charAt(0) == 'b')
+            {
+              val = typedInput.split(" ");
+              serverMaster.getStore().buyThneeds(Integer.parseInt(val[1]), Float.parseFloat(val[2]), val[3]);
+            }
+            else if (typedInput.charAt(0) == 's')
+            {
+              val = typedInput.split(" ");
+              serverMaster.getStore().sellThneeds(Integer.parseInt(val[1]), Float.parseFloat(val[2]), val[3]);
+            }
+            else if (typedInput.equals("q"))
+            {
+              client.close();
+              serverMaster.removeServerWorker(this);
+            }
           }
         }
         catch (IOException e)

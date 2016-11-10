@@ -4,6 +4,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.Scanner;
 
@@ -93,11 +94,17 @@ public class Client
   private void listenToUserRequests()
   {
     String[] val;
+    String typedInput;
+
     while_label:
     while (true)
     {
-      String typedInput = keyboard.nextLine();
-      if (typedInput == null) continue;
+      typedInput = keyboard.nextLine();
+      if (typedInput == null)
+      {
+        System.out.println("GGGGGGGGGGGGGGGGGGGGGGGGggg");
+        continue;
+      }
       if (typedInput.length() < 1) continue;
       val = typedInput.split(" ");
 
@@ -119,7 +126,7 @@ public class Client
 
           if (quantity <= thneedsInStore)
           {
-            write.println("s " + quantity + " " + unitPrice+ " " + timeDiff());
+            write.println("s " + quantity + " " + unitPrice + " " + timeDiff());
           }
           break;
         case 'i':
@@ -130,7 +137,6 @@ public class Client
           write.println("q");
           break while_label;
       }
-      write.println(typedInput);
     }
   }
 
@@ -211,22 +217,33 @@ public class Client
       try
       {
         System.out.println("Client: listening to socket");
-        String msg = reader.readLine();
-        if (msg.contains(": inventory="))
+        try
         {
-          thneedsInStore = Integer.parseInt(msg.substring(msg.indexOf('=')+1, msg.lastIndexOf(" ")-2));
-          $balance$inStore = Float.parseFloat(msg.substring(msg.lastIndexOf('=')+1));
-          System.out.println(msg);
+          String msg = reader.readLine();
+
+          if (msg.contains(": inventory="))//successful sale or buy
+          {
+            thneedsInStore = Integer.parseInt(msg.substring(msg.indexOf('=') + 1, msg.lastIndexOf(" ") - 2));
+            $balance$inStore = Float.parseFloat(msg.substring(msg.lastIndexOf('=') + 1));
+            System.out.println(msg);
+          }
+          else if (msg.startsWith("Server"))//connected msg #1
+          {
+            System.out.println(msg);
+          }
+          else if (msg.startsWith("$"))//connected msg #2
+          {
+            thneedsInStore = Integer.parseInt(msg.substring(1, msg.indexOf(' ')));
+            $balance$inStore = Float.parseFloat(msg.substring(msg.indexOf(' ') + 1));
+          }
+          else
+          {
+            System.out.println("Unrecognized message from Server(" + timeDiff() + ") = " + msg);
+          }
         }
-        else if(msg.startsWith("$"))
+        catch (SocketException exception)
         {
-          thneedsInStore = Integer.parseInt(msg.substring(1, msg.indexOf(' ')));
-          $balance$inStore = Float.parseFloat(msg.substring(msg.indexOf(' ')+1));
-          System.out.println(thneedsInStore +" "+ $balance$inStore);
-        }
-        else
-        {
-          System.out.println("Unrecognized message from Server(" + timeDiff() + ") = " + msg);
+
         }
       }
       catch (IOException e)
