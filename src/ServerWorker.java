@@ -74,6 +74,7 @@ public class ServerWorker extends Thread
             {
               client.close();
               serverMaster.removeServerWorker(this);
+              break;
             }
           }
         }
@@ -83,5 +84,6 @@ public class ServerWorker extends Thread
         }
       }
     }
+    System.out.println("thread closed");
   }
 }

@@ -100,11 +100,7 @@ public class Client
     while (true)
     {
       typedInput = keyboard.nextLine();
-      if (typedInput == null)
-      {
-        System.out.println("GGGGGGGGGGGGGGGGGGGGGGGGggg");
-        continue;
-      }
+      if (typedInput == null) continue;
       if (typedInput.length() < 1) continue;
       val = typedInput.split(" ");
 
